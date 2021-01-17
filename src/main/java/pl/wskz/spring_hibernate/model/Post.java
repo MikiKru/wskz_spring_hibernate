@@ -17,4 +17,8 @@ public class Post {
     private LocalDateTime publishDateTime;
     @Enumerated(value = EnumType.STRING)
     private Category category;
+    // REALCJA N : 1
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User author;
 }
