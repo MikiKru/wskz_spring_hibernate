@@ -8,6 +8,7 @@ import pl.wskz.spring_hibernate.model.User;
 import pl.wskz.spring_hibernate.service.UserService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController     // klasa mapująca żądania protokołu http i zwracająca dane w formacie JSON
 public class UserController {
@@ -77,5 +78,13 @@ public class UserController {
     @GetMapping("/users/status={status}")
     public List<User> getUsersByStatus(@PathVariable("status") boolean status){
         return userService.getUsersByStatus(status);
+    }
+    @PutMapping("/users/updateStatus")
+    public void updateUserStatusByEmail(@RequestParam("status") boolean status, @RequestParam("email") String email){
+        userService.updateUserStatusByEmail(status,email);
+    }
+    @GetMapping("/users/statusStats")
+    public Map getUserStats(){
+        return userService.getUserStats();
     }
 }

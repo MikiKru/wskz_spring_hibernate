@@ -9,7 +9,9 @@ import pl.wskz.spring_hibernate.model.User;
 import pl.wskz.spring_hibernate.repository.UserRepository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service    // klasa implementującą logikę biznesową powiązaną z encją User
 public class UserService {
@@ -68,6 +70,13 @@ public class UserService {
     }
     public List<User> getUsersByStatus(boolean status){
         return userRepository.findAllByStatus(status);
+    }
+    public void updateUserStatusByEmail(boolean status, String email){
+        userRepository.updateUserStatusByEmail(status, email);
+    }
+    public Map getUserStats(){
+        return userRepository.userStatusStats().stream()
+                .collect(Collectors.toMap(o -> o[0], o -> o[1]));
     }
 
 }
