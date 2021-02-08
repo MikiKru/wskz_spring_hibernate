@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=”http://www.thymeleaf.org”>
+
+<!--znajduje się w fragments/head.html -> znacznik head-->
+<head th:replace="fragments/head.html :: head"></head>
+
+<body>
+<!--navigation-->
+<nav th:replace="fragments/navigation.html :: nav"></nav>
+
+<!-- Page Header -->
+<header th:replace="fragments/header.html :: header(title='Blog', subtitle='Mój pierwszy blog')"></header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <h4> Lista postów </h4>
+            <p th:if="${posts.size() == 0}" th:text="'Brak postów'"></p>
+            <div class="post-preview" th:if="${posts.size() != 0}" th:each="post : ${posts}">
+                <a th:href="@{/}">
+                <h2 class="post-title" th:text="${post.title}"> example title</h2>
+                <hr>
+                </a>
+            </div>
+            <h4> Utwórz posta </h4>
+            <form th:action="@{/post}" method="POST" th:object="${post}">
+                <div class="form-group">
+                <input class="form-control" th:type="text" th:field="*{title}" placeholder="dodaj tytuł"><br>
+                <textarea class="form-control" th:field="*{content}" placeholder="dodaj teść"></textarea><br>
+                <select class="form-control" th:field="*{category}">
+                    <option th:each="c : ${categories}" th:value="${c}" th:text="${c.getCategoryName()}"></option>
+                </select><br>
+                <input class="btn btn-success btn-rounded" th:type="submit" th:value="'dodaj'">
+                </div>
+            </form>
+            <h4> Zarejestruj się</h4>
+            <form th:action="@{/user}" method="POST" th:object="${user}">
+                <div class="form-group">
+                <input class="form-control" th:type="text" th:field="*{name}" placeholder="podaj imię"><br>
+                <input class="form-control" th:type="text" th:field="*{lastName}" placeholder="podaj nazwisko"><br>
+                <input class="form-control" th:type="email" th:field="*{email}" placeholder="podaj email"><br>
+                <input class="form-control" th:type="password" th:field="*{password}" placeholder="podaj hasło"><br>
+                <input class="form-control" th:type="password" th:field="*{passwordRepeat}" placeholder="powtórz hasło"><br>
+                <input class="btn btn-success btn-rounded" th:type="submit" th:value="'zarejestruj'">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- Footer -->
+<footer th:replace="fragments/footer.html :: footer"></footer>
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

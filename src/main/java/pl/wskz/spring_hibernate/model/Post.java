@@ -1,10 +1,12 @@
 package pl.wskz.spring_hibernate.model;
 
+import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name = "posts")
 public class Post {

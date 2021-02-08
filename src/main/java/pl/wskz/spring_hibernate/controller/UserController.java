@@ -10,6 +10,7 @@ import pl.wskz.spring_hibernate.service.UserService;
 import java.util.List;
 import java.util.Map;
 
+@RequestMapping("/api")         // localhost:8080/api
 @RestController     // klasa mapująca żądania protokołu http i zwracająca dane w formacie JSON
 public class UserController {
     private UserService userService;

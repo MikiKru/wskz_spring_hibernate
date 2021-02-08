@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import pl.wskz.spring_hibernate.model.User;
 import pl.wskz.spring_hibernate.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,6 +24,8 @@ public class UserService {
     // utworzenie użytkownika i wprowadzenie go do tabelki
     // INSERT INTO users VALUES (?,?,?,?,?,?,?);
     public void addUser(User user){
+        user.setRegistrationTime(LocalDateTime.now());
+        user.setStatus(true);
         userRepository.save(user);
     }
     // SELECT * FROM users;

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=”http://www.thymeleaf.org”>
+
+<!--znajduje się w fragments/head.html -> znacznik head-->
+<head th:replace="fragments/head.html :: head"></head>
+
+<body>
+<!--navigation-->
+<nav th:replace="fragments/navigation.html :: nav"></nav>
+
+<!-- Page Header -->
+<header th:replace="fragments/header.html :: header(title='BLOG', subtitle='Mój pierwszy blog')"></header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <h1>Login</h1>
+            <form th:action="@{/login_process}" method="POST">
+                <div class="form-group">
+                <input class="form-control" name="email" placeholder="email">
+                <input class="form-control" name="password" placeholder="hasło">
+                <input class="btn btn-success btn-rounded" type="submit" value="zaloguj">
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer th:replace="fragments/footer.html :: footer"></footer>
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
+
