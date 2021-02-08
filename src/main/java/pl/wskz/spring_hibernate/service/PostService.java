@@ -8,6 +8,7 @@ import pl.wskz.spring_hibernate.repository.PostRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -22,6 +23,9 @@ public class PostService {
     public void publishPost(Post post){
         post.setPublishDateTime(LocalDateTime.now());
         postRepository.save(post);
+    }
+    public Optional<Post> getPostById(int postId){
+        return postRepository.findById(postId);
     }
 
 }

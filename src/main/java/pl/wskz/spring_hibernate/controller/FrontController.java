@@ -34,8 +34,12 @@ public class FrontController {
         model.addAttribute("user", new User());
         return "postsView";
     }
-    @GetMapping("/posts/{postId}")
-    public String getPost(@PathVariable("postId") int postId){
+    @GetMapping("/posts&{postId}")
+    public String getPost(
+            @PathVariable("postId") int postId, Model model){
+        if(postService.getPostById(postId).isPresent()) {
+            model.addAttribute("post", postService.getPostById(postId).get());
+        }
         return "postView";
     }
     @GetMapping("/login")           // otwarty dla wszystkich użytkowników
