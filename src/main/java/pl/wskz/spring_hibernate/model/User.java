@@ -30,10 +30,10 @@ public class User {
     @Email(message = "{pl.wskz.spring_hibernate.model.User.email.Email}")
     private String email;
     @Size(min = 8, message = "{pl.wskz.spring_hibernate.model.User.password.Size}")                                                     // MIN 8 chars
-    @Pattern(
-            regexp = "([A-Z]{1,}.*[0-9]{1,}|[0-9]{1,}.*[A-Z]{1,})",
-            message = "{pl.wskz.spring_hibernate.model.User.password.Pattern}"
-    )   // 1 CL + 1 D
+//    @Pattern(
+//            regexp = "([A-Z]{1,}.*[0-9]{1,}|[0-9]{1,}.*[A-Z]{1,})",
+//            message = "{pl.wskz.spring_hibernate.model.User.password.Pattern}"
+//    )   // 1 CL + 1 D
     private String password;
     @Transient
     private String passwordRepeat;

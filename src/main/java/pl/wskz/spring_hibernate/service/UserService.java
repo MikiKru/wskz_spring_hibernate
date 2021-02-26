@@ -4,30 +4,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.wskz.spring_hibernate.model.Role;
 import pl.wskz.spring_hibernate.model.User;
+import pl.wskz.spring_hibernate.repository.RoleRepository;
 import pl.wskz.spring_hibernate.repository.UserRepository;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service    // klasa implementującą logikę biznesową powiązaną z encją User
 public class UserService {
     private UserRepository userRepository;
+    private RoleRepository roleRepository;
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
     // utworzenie użytkownika i wprowadzenie go do tabelki
     // INSERT INTO users VALUES (?,?,?,?,?,?,?);
     public void addUser(User user){
         user.setRegistrationTime(LocalDateTime.now());
         user.setStatus(true);
+        // szyfrowanie hasła
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        // przypisanie roli
+        Role role = roleRepository.getOne(1);
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        user.setRoles(roles);
         userRepository.save(user);
     }
+
     // SELECT * FROM users;
     public List<User> getAllUsers(){
         return userRepository.findAll();

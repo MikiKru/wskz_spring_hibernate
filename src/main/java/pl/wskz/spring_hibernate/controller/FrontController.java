@@ -1,6 +1,8 @@
 package pl.wskz.spring_hibernate.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,11 +31,17 @@ public class FrontController {
     }
 
     @GetMapping("/")                // otwarty dla wszystkich użytkowników
-    public String getAllPosts(Model model){
+    public String getAllPosts(Model model, Authentication auth){
         model.addAttribute("posts", postService.getAllPosts());
         model.addAttribute("post", new Post());
         model.addAttribute("categories", new ArrayList<>(Arrays.asList(Category.values())));
         model.addAttribute("user", new User());
+        model.addAttribute("auth", auth);
+        if(auth != null) {
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            System.out.println("Email: " + userDetails.getUsername());
+            System.out.println("Roles: " + userDetails.getAuthorities());
+        }
         return "postsView";
     }
     @GetMapping("/posts&{postId}")
