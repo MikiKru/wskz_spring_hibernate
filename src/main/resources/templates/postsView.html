@@ -26,9 +26,11 @@
             <h4> Utwórz posta </h4>
             <form th:action="@{/post}" method="POST" th:object="${post}">
                 <div class="form-group">
-                <input class="form-control" th:type="text" th:field="*{title}" placeholder="dodaj tytuł"><br>
-                <textarea class="form-control" th:field="*{content}" placeholder="dodaj teść"></textarea><br>
-                <select class="form-control" th:field="*{category}">
+                    <span th:errors="*{title}"></span>
+                    <input class="form-control" th:type="text" th:field="*{title}" placeholder="dodaj tytuł"><br>
+                    <span th:errors="*{content}"></span>
+                    <textarea class="form-control" th:field="*{content}" placeholder="dodaj teść"></textarea><br>
+                    <select class="form-control" th:field="*{category}">
                     <option th:each="c : ${categories}" th:value="${c}" th:text="${c.getCategoryName()}"></option>
                 </select><br>
                 <input class="btn btn-success btn-rounded" th:type="submit" th:value="'dodaj'">
@@ -37,11 +39,15 @@
             <h4> Zarejestruj się</h4>
             <form th:action="@{/user}" method="POST" th:object="${user}">
                 <div class="form-group">
-                <input class="form-control" th:type="text" th:field="*{name}" placeholder="podaj imię"><br>
-                <input class="form-control" th:type="text" th:field="*{lastName}" placeholder="podaj nazwisko"><br>
-                <input class="form-control" th:type="email" th:field="*{email}" placeholder="podaj email"><br>
-                <input class="form-control" th:type="password" th:field="*{password}" placeholder="podaj hasło"><br>
-                <input class="form-control" th:type="password" th:field="*{passwordRepeat}" placeholder="powtórz hasło"><br>
+                    <span th:errors="*{name}"></span>
+                    <input class="form-control" th:type="text" th:field="*{name}" placeholder="podaj imię"><br>
+                    <span th:errors="*{lastName}"></span>
+                    <input class="form-control" th:type="text" th:field="*{lastName}" placeholder="podaj nazwisko"><br>
+                    <span th:errors="*{email}"></span>
+                    <input class="form-control" th:type="email" th:field="*{email}" placeholder="podaj email"><br>
+                    <span th:errors="*{password}"></span>
+                    <input class="form-control" th:type="password" th:field="*{password}" placeholder="podaj hasło"><br>
+                    <input class="form-control" th:type="password" th:field="*{passwordRepeat}" placeholder="powtórz hasło"><br>
                 <input class="btn btn-success btn-rounded" th:type="submit" th:value="'zarejestruj'">
                 </div>
             </form>

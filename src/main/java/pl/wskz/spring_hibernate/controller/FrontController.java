@@ -3,6 +3,7 @@ package pl.wskz.spring_hibernate.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import pl.wskz.spring_hibernate.model.User;
 import pl.wskz.spring_hibernate.service.PostService;
 import pl.wskz.spring_hibernate.service.UserService;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -46,13 +48,33 @@ public class FrontController {
     public String loginUser(){
         return "loginView";
     }
+
     @PostMapping("/post")           // tylko dla zarejestrowanych użytkowników
-    public String addNewPost(@ModelAttribute("post") Post post){
+    public String addNewPost(
+            @Valid @ModelAttribute("post") Post post,
+            BindingResult bindingResult,
+            Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("posts", postService.getAllPosts());
+            model.addAttribute("categories", new ArrayList<>(Arrays.asList(Category.values())));
+            model.addAttribute("user", new User());
+            return "postsView";
+        }
         postService.publishPost(post);
         return "redirect:/";        // przekierowanie metodą get na adres :url
     }
+
     @PostMapping("/user")           // otwarty dla wszystkich użytkowników
-    public String registerUser(@ModelAttribute("user") User user){
+    public String registerUser(
+            @Valid @ModelAttribute("user") User user,
+            BindingResult bindingResult,
+            Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("posts", postService.getAllPosts());
+            model.addAttribute("post", new Post());
+            model.addAttribute("categories", new ArrayList<>(Arrays.asList(Category.values())));
+            return "postsView";
+        }
         userService.addUser(user);
         return "redirect:/login";
     }
