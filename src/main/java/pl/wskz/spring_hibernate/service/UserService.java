@@ -26,7 +26,7 @@ public class UserService {
     }
     // utworzenie użytkownika i wprowadzenie go do tabelki
     // INSERT INTO users VALUES (?,?,?,?,?,?,?);
-    public void addUser(User user){
+    public User addUser(User user){
         user.setRegistrationTime(LocalDateTime.now());
         user.setStatus(true);
         // szyfrowanie hasła
@@ -36,7 +36,7 @@ public class UserService {
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         user.setRoles(roles);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     // SELECT * FROM users;
